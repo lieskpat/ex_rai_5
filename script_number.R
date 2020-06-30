@@ -6,5 +6,5 @@ if (x1 == x2) {
 } else {
 	cat("Die Zufallszahl ist: ", x1)
 	cat("\nIhre Zahl ist: ", x2)
-	print("\nVerloren")
+	cat("\nVerloren")
 }
