@@ -1,0 +1,108 @@
+---
+title: "Analyse des esoph Datensatzes mit RStudio"
+output: html_document
+---
+
+### Erster Schritt
+
+Datensatz in Data Frame einlesen.
+
+```{r}
+df <- esoph
+```
+
+### Zweiter Schritt
+
+Struktur des Datensatzes ausgeben.
+
+```{r}
+str(df)
+```
+
+### Dritter Schritt
+
+Zusammenfassung des Datensatzes ausgeben.
+
+```{r}
+summary(df)
+```
+
+## Analyse des Datensatzes
+
+Allgemeine Infos des Datensatzes (mean, median, var) ausgeben.
+
+```{r}
+mean(df$ncases)
+mean(df$ncontrols)
+median(df$ncases)
+median(df$ncontrols)
+var(df$ncases)
+var(df$ncontrols)
+```
+
+Eine beschränkte Zusammenfassung erstellen.
+```{r}
+summary(df[c("ncases", "ncontrols", "agegp")])
+```
+
+Konsum von Alkohol und Tabak in Abhänigkeit von Alter und Krebs-Erkrankung (Exemplarisch an zwei Altersstufen).
+
+```{r}
+df.sub0 <- subset(df, agegp == "25-34" & ncases > 0)
+df.sub0
+```
+
+```{r}
+df.sub1 <- subset(df, agegp == "65-74" & ncases > 0)
+df.sub1
+```
+Wie viele Erkrankungen gibt es bei der jüngsten Altersstufe in Verbindung mit gesundem Lebensstil?
+
+```{r}
+df.sub2 <- subset(df, agegp == "25-34" & alcgp == "0-39g/day" & tobgp == "0-9g/day")
+df.sub2
+```
+
+Bei der ältesten Altersgruppe in Verbindung mit gesundem Lebensstil?
+
+```{r}
+df.sub3 <- subset(df, agegp == "75+" & alcgp == "0-39g/day" & tobgp == "0-9g/day")
+df.sub3
+```
+
+
+Eingrenzung von Daten mithilfe der select Funktion.
+
+```{r}
+df.sub4 <- subset(df, agegp == "35-44" & ncases > 0, select = c(agegp, alcgp, tobgp, ncases))
+df.sub4
+```
+
+Krebserkrankungen bei gesundem Lebensstil über alle Altersgruppen.
+
+```{r}
+df.sub5 <- subset(df, alcgp == "0-39g/day" & tobgp == "0-9g/day" & ncases > 0, select = c(agegp, alcgp, tobgp, ncases))
+df.sub5
+```
+
+Krebserkrankungen bei sehr ungesundem Lebensstil über alle Altersgruppen.
+
+```{r}
+df.sub6 <- subset(df, alcgp == "120+" & tobgp == "30+" & ncases > 0, select = c(agegp, alcgp, tobgp, ncases))
+df.sub6
+```
+
+### Zusammenfassung
+
+Die Betrachtung der Kontrollen in Bezug zu den Erkrankungen müßte auch untersucht werden. Weiterhin könnte man Summen, Maximal-Werte und Minimal-Werte bilden. Der Analyse des Datensatzes sind hier kaum Grenzen gesetzt.
+
+### Plots
+
+Zum Abschluss werden noch ein paar Plots gezeigt.
+
+```{r}
+hist(df$ncases)
+```
+```{r}
+plot(df)
+```
