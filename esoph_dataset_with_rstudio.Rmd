@@ -1,6 +1,8 @@
 ---
 title: "Analyse des esoph Datensatzes mit RStudio"
-output: html_document
+output:
+  pdf_document: default
+  html_document: default
 ---
 
 ### Erster Schritt
